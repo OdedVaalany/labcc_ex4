@@ -7,6 +7,7 @@
 #include <fstream>
 #define LENGTH_ERROR_MSG "The matrix isn't in the same dimension"
 #define RUNTIME_ERROR_MSG "Invalid input"
+#define PRINT_LOWER_VALUE 0.1
 
 Matrix::Matrix (int row, int cols)
 {
@@ -24,6 +25,8 @@ Matrix::Matrix (int row, int cols)
 
 Matrix::Matrix ()
 {
+  dim.cols =1;
+  dim.rows = 1;
   val = new (std::nothrow) float[1];
   val[0] = 0;
 }
@@ -248,7 +251,7 @@ std::ostream &operator<< (std::ostream &pr, const Matrix &a)
     {
       for (int j = 0; j < a.get_cols (); ++j)
         {
-          if (a (i, j) > 0.1)
+          if (a (i, j) > PRINT_LOWER_VALUE)
             {
               pr << "**";
             }

@@ -2,6 +2,7 @@
 // Created by עודד ועלני on 11/05/2022.
 //
 #include "MlpNetwork.h"
+#define DEFULT_DIGIT_VALUE {11,0}
 MlpNetwork::MlpNetwork (Matrix *weights, Matrix *bias)
 {
   layers[0] = new Dense (weights[0], bias[0], relu);
@@ -16,7 +17,7 @@ digit MlpNetwork::operator() (Matrix &a)
   temp = (*layers[1])(temp);
   temp = (*layers[2])(temp);
   temp = (*layers[3])(temp);
-  digit return_value = {11,0};
+  digit return_value = DEFULT_DIGIT_VALUE;
   for (unsigned int i = 0; i < (unsigned int)temp.get_rows(); ++i)
     {
       if(return_value.probability < temp[(int)i])
