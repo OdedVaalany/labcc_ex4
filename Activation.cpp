@@ -5,25 +5,27 @@
 #include <cmath>
 namespace activation
 {
-    Matrix &relu (Matrix &a)
+    Matrix relu (const Matrix &a)
     {
+      Matrix temp = Matrix(a);
       for (int i = 0; i < a.get_rows (); ++i)
         {
-          if (a[i] < 0)
+          if (temp[i] < 0)
             {
-              a[i] = 0;
+              temp[i] = 0;
             }
         }
-      return a;
+      return temp;
     }
-    Matrix &softmax (Matrix &a)
+    Matrix softmax (const Matrix &a)
     {
+      Matrix temp = Matrix(a);
       float sum = 0;
-      for (int i = 0; i < a.get_rows (); ++i)
+      for (int i = 0; i < temp.get_rows (); ++i)
         {
-          sum += a[i] = std::exp (a[i]);
+          sum += temp[i] = std::exp (temp[i]);
         }
-      a = a * (1 / sum);
-      return a;
+      temp = temp * (1 / sum);
+      return temp;
     }
 }

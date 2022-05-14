@@ -32,7 +32,8 @@ const matrix_dims bias_dims[] = {{128, 1},
 
 class MlpNetwork {
  private:
-  Dense *layers[4];
+  Matrix w[4],b[4];
+  Dense layer_number(int i);
  public:
   MlpNetwork (Matrix *weights, Matrix *bias);
   digit operator() (Matrix &a);

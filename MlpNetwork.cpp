@@ -5,24 +5,34 @@
 #define DEFULT_DIGIT_VALUE {11,0}
 MlpNetwork::MlpNetwork (Matrix *weights, Matrix *bias)
 {
-  layers[0] = new Dense (weights[0], bias[0], relu);
-  layers[1] = new Dense (weights[1], bias[1], relu);
-  layers[2] = new Dense (weights[2], bias[2], relu);
-  layers[3] = new Dense (weights[3], bias[3], softmax);
+  for (int i = 0; i < 4; ++i)
+    {
+      w[i] = weights[i];
+      b[i] = bias[i];
+    }
+}
+
+Dense MlpNetwork::layer_number (int i)
+{
+  if(i<3)
+    {
+      return Dense(w[i],b[i],relu);
+    }
+  return Dense(w[i],b[i],softmax);
 }
 
 digit MlpNetwork::operator() (Matrix &a)
 {
-  Matrix temp = ((*layers[0])(a));
-  temp = (*layers[1])(temp);
-  temp = (*layers[2])(temp);
-  temp = (*layers[3])(temp);
+  Matrix temp = (layer_number(0)(a));
+  temp = layer_number(1) (temp);
+  temp = layer_number(2) (temp);
+  temp = layer_number(3) (temp);
   digit return_value = DEFULT_DIGIT_VALUE;
-  for (unsigned int i = 0; i < (unsigned int)temp.get_rows(); ++i)
+  for (unsigned int i = 0; i < (unsigned int) temp.get_rows (); ++i)
     {
-      if(return_value.probability < temp[(int)i])
+      if (return_value.probability < temp[(int) i])
         {
-          return_value = {i,temp[i]};
+          return_value = {i, temp[i]};
         }
     }
   return return_value;

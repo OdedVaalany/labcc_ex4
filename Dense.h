@@ -3,18 +3,17 @@
 
 #include "Activation.h"
 
-class Dense{
+class Dense {
  private:
   Matrix _weights;
   Matrix _bias;
   activation::activation_func _fun;
  public:
-  Dense(Matrix& weights,Matrix& bias,activation::activation_func func);
-  Matrix get_weights();
-  Matrix get_bias();
-  activation::activation_func get_activation();
-  Matrix operator()(Matrix& a);
+  Dense (Matrix &weights, Matrix &bias, activation::activation_func func);
+  Matrix get_weights ();
+  Matrix get_bias ();
+  activation::activation_func get_activation ();
+  Matrix operator() (Matrix &a);
 };
-
 
 #endif //DENSE_H

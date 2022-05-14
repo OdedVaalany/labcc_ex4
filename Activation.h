@@ -5,9 +5,9 @@
 
 namespace activation
 {
-    typedef Matrix& (*activation_func) (Matrix &a);
-    Matrix& relu (Matrix &a);
-    Matrix& softmax (Matrix &a);
+    typedef Matrix (*activation_func) ( const Matrix &a);
+    Matrix relu (const Matrix &a);
+    Matrix softmax (const Matrix &a);
 }
 
 #endif //ACTIVATION_H

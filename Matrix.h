@@ -26,12 +26,12 @@ class Matrix {
   Matrix &vectorize ();
   void plain_print () const;
   float norm () const;
-  Matrix &dot (Matrix &m);
+  Matrix dot (Matrix &m);
   Matrix &operator= (const Matrix &b);
-  friend Matrix &operator+ (const Matrix &a, const Matrix &b);
-  friend Matrix &operator* (const Matrix &a, const Matrix &b);
-  friend Matrix &operator* (const Matrix &a, const float &c);
-  friend Matrix &operator* (const float &c, const Matrix &a);
+  friend Matrix operator+ (const Matrix &a, const Matrix &b);
+  friend Matrix operator* (const Matrix &a, const Matrix &b);
+  friend Matrix operator* (const Matrix &a, const float &c);
+  friend Matrix operator* (const float &c, const Matrix &a);
   Matrix &operator+= (const Matrix &b);
   float &operator[] (const int &i);
   float operator[] (const int &i) const;

@@ -97,21 +97,21 @@ void Matrix::plain_print () const
     }
 }
 
-Matrix &Matrix::dot (Matrix &m)
+Matrix Matrix::dot (Matrix &m)
 {
   if (m.get_rows () != dim.rows || dim.cols != m.get_cols ())
     {
       throw std::out_of_range ("The matrix dosen't have the same dimensions");
     }
-  Matrix *temp = new Matrix (m);
+  Matrix temp = Matrix (m);
   for (int i = 0; i < dim.rows; ++i)
     {
       for (int j = 0; j < dim.cols; ++j)
         {
-          (*temp) (i, j) *= val[j + (i * dim.cols)];
+          (temp) (i, j) *= val[j + (i * dim.cols)];
         }
     }
-  return (*temp);
+  return (temp);
 }
 
 float Matrix::norm () const
@@ -145,70 +145,70 @@ float &Matrix::operator() (int row, int col)
   return val[col + (dim.cols * row)];
 }
 
-Matrix &operator+ (const Matrix &a, const Matrix &b)
+Matrix operator+ (const Matrix &a, const Matrix &b)
 {
   if (b.get_rows () != a.get_rows () || a.get_cols () != b.get_cols ())
     {
       throw std::length_error ("The matrix dosen't have the same dimensions");
     }
-  Matrix *temp = new Matrix (b);
+  Matrix temp =  Matrix (b);
   for (int i = 0; i < a.get_rows (); ++i)
     {
       for (int j = 0; j < a.get_cols (); ++j)
         {
-          (*temp) (i, j) += a (i, j);
+          (temp) (i, j) += a (i, j);
         }
     }
-  return *temp;
+  return temp;
 }
 
-Matrix &operator* (const Matrix &a, const Matrix &b)
+Matrix operator* (const Matrix &a, const Matrix &b)
 {
   if (a.get_cols () != b.get_rows ())
     {
       throw std::length_error ("The cols and"
                                " rows of the matrix need to be the same");
     }
-  Matrix *temp = new Matrix (a.get_rows (), b.get_cols ());
-  for (int i = 0; i < temp->get_rows (); ++i)
+  Matrix temp =  Matrix (a.get_rows (), b.get_cols ());
+  for (int i = 0; i < temp.get_rows (); ++i)
     {
-      for (int j = 0; j < temp->get_cols (); ++j)
+      for (int j = 0; j < temp.get_cols (); ++j)
         {
           for (int k = 0; k < b.get_rows (); ++k)
             {
-              (*temp) (i, j) += a (i, k) * b (k, j);
+              (temp) (i, j) += a (i, k) * b (k, j);
             }
         }
     }
-  return *temp;
+  return temp;
 }
 
-Matrix &operator* (const Matrix &a, const float &c)
+Matrix operator* (const Matrix &a, const float &c)
 {
-  Matrix *temp = new Matrix (a);
-  for (int i = 0; i < temp->get_rows (); ++i)
+  Matrix temp =  Matrix (a);
+  for (int i = 0; i < temp.get_rows (); ++i)
     {
-      for (int j = 0; j < temp->get_cols (); ++j)
+      for (int j = 0; j < temp.get_cols (); ++j)
         {
 
-          (*temp) (i, j) *= c;
+          (temp) (i, j) *= c;
         }
     }
-  return (*temp);
+  return (temp);
 }
 
-Matrix &operator* (const float &c, const Matrix &a)
+Matrix operator* (const float &c, const Matrix &a)
 {
-  Matrix *temp = new Matrix (a);
-  for (int i = 0; i < temp->get_rows (); ++i)
+  Matrix temp =  Matrix (a);
+  for (int i = 0; i < temp.get_rows (); ++i)
     {
-      for (int j = 0; j < temp->get_cols (); ++j)
+      for (int j = 0; j < temp.get_cols (); ++j)
         {
 
-          (*temp) (i, j) *= c;
+          (temp) (i, j) *= c;
         }
     }
-  return (*temp);
+  return (temp);
 }
 
 Matrix &Matrix::operator+= (const Matrix &b)
@@ -272,7 +272,6 @@ std::ifstream &operator>> (std::ifstream &re, Matrix &a)
     {
       throw std::runtime_error (RUNTIME_ERROR_MSG);
     }
-  std::cout << a;
   return re;
 }
 
@@ -280,7 +279,14 @@ Matrix &Matrix::operator= (const Matrix &b)
 {
   if (this != &b)
     {
-      delete[] val;
+      if(get_cols() * get_rows() == 1)
+        {
+          delete val;
+        }
+        else
+        {
+          delete[] val;
+        }
       val = new float[b.get_cols () * b.get_rows ()];
       this->dim.cols = b.get_cols ();
       this->dim.rows = b.get_rows ();
