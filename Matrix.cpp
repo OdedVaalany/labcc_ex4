@@ -25,7 +25,7 @@ Matrix::Matrix (int row, int cols)
 
 Matrix::Matrix ()
 {
-  dim.cols =1;
+  dim.cols = 1;
   dim.rows = 1;
   val = new (std::nothrow) float[1];
   val[0] = 0;
@@ -74,8 +74,8 @@ Matrix &Matrix::transpose ()
     {
       val[i] = temp[i];
     }
-    delete[] temp;
-    return (*this);
+  delete[] temp;
+  return (*this);
 }
 
 Matrix &Matrix::vectorize ()
@@ -151,7 +151,7 @@ Matrix operator+ (const Matrix &a, const Matrix &b)
     {
       throw std::length_error ("The matrix dosen't have the same dimensions");
     }
-  Matrix temp =  Matrix (b);
+  Matrix temp = Matrix (b);
   for (int i = 0; i < a.get_rows (); ++i)
     {
       for (int j = 0; j < a.get_cols (); ++j)
@@ -169,7 +169,7 @@ Matrix operator* (const Matrix &a, const Matrix &b)
       throw std::length_error ("The cols and"
                                " rows of the matrix need to be the same");
     }
-  Matrix temp =  Matrix (a.get_rows (), b.get_cols ());
+  Matrix temp = Matrix (a.get_rows (), b.get_cols ());
   for (int i = 0; i < temp.get_rows (); ++i)
     {
       for (int j = 0; j < temp.get_cols (); ++j)
@@ -185,7 +185,7 @@ Matrix operator* (const Matrix &a, const Matrix &b)
 
 Matrix operator* (const Matrix &a, const float &c)
 {
-  Matrix temp =  Matrix (a);
+  Matrix temp = Matrix (a);
   for (int i = 0; i < temp.get_rows (); ++i)
     {
       for (int j = 0; j < temp.get_cols (); ++j)
@@ -199,7 +199,7 @@ Matrix operator* (const Matrix &a, const float &c)
 
 Matrix operator* (const float &c, const Matrix &a)
 {
-  Matrix temp =  Matrix (a);
+  Matrix temp = Matrix (a);
   for (int i = 0; i < temp.get_rows (); ++i)
     {
       for (int j = 0; j < temp.get_cols (); ++j)
@@ -279,11 +279,11 @@ Matrix &Matrix::operator= (const Matrix &b)
 {
   if (this != &b)
     {
-      if(get_cols() * get_rows() == 1)
+      if (get_cols () * get_rows () == 1)
         {
           delete val;
         }
-        else
+      else
         {
           delete[] val;
         }
