@@ -267,11 +267,11 @@ std::ostream &operator<< (std::ostream &pr, const Matrix &a)
 
 std::ifstream &operator>> (std::ifstream &re, Matrix &a)
 {
-  re.read ((char *) (a.val), sizeof (float) * a.get_rows () * a.get_cols ());
   if (!re)
     {
       throw std::runtime_error (RUNTIME_ERROR_MSG);
     }
+  re.read ((char *) (a.val), sizeof (float) * a.get_rows () * a.get_cols ());
   return re;
 }
 
