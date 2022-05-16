@@ -267,12 +267,14 @@ std::ostream &operator<< (std::ostream &pr, const Matrix &a)
 
 std::ifstream &operator>> (std::ifstream &re, Matrix &a)
 {
-  re.seekg (0,std::ios::end);
-  if(!re || ((int) re.tellg()) != a.get_rows() * a.get_cols() * sizeof (a[0]))
+  re.seekg (0, std::ios::end);
+  if (!re || ((long int) re.tellg ())
+             != ((long int) a.get_rows ()) * ((long int) a.get_cols ())
+                * ((long int) sizeof (a[0])))
     {
       throw std::runtime_error (RUNTIME_ERROR_MSG);
     }
-  re.seekg (0,std::ios::beg);
+  re.seekg (0, std::ios::beg);
   re.read ((char *) (a.val), sizeof (float) * a.get_rows () * a.get_cols ());
   return re;
 }
