@@ -268,7 +268,7 @@ std::ostream &operator<< (std::ostream &pr, const Matrix &a)
 std::ifstream &operator>> (std::ifstream &re, Matrix &a)
 {
   re.seekg (0,std::ios::end);
-  if(!re || (int) re.tellg() != a.get_rows() * a.get_cols() * sizeof (a[0]))
+  if(!re || ((int) re.tellg()) != a.get_rows() * a.get_cols() * sizeof (a[0]))
     {
       throw std::runtime_error (RUNTIME_ERROR_MSG);
     }
